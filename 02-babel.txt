@@ -1,0 +1,25 @@
+ ____        _          _ 
+| __ )  __ _| |__   ___| |
+|  _ \ / _` | '_ \ / _ \ |
+| |_) | (_| | |_) |  __/ |
+|____/ \__,_|_.__/ \___|_|
+ 
+( http://babeljs.io )
+
+* Formerly called 6to5, renamed for new mission
+* Javascript transpiler that allows you to use modern ECMAScript features now
+* Currently implementing features found in ES6/ES7 (aka ES2015/ES2016)
+
+Install:
+
+`nvm install --global babel`
+
+Run an ES6+ Javascript file:
+
+babel-node <file>
+
+Generate an ES5 file from ES6:
+
+babel <file>
+
+See http://babeljs.io for more options.
