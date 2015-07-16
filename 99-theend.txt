@@ -1,0 +1,13 @@
+ _____ _            _____           _ 
+|_   _| |__   ___  | ____|_ __   __| |
+  | | | '_ \ / _ \ |  _| | '_ \ / _` |
+  | | | | | |  __/ | |___| | | | (_| |
+  |_| |_| |_|\___| |_____|_| |_|\__,_|
+ 
+ Thank you!
+
+ Follow me on Twitter: @jasonpincin
+
+ All these examples available at: 
+ 
+ http://github.com/jasonpincin/yorkjs

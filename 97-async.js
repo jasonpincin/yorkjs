@@ -12,7 +12,6 @@ var http   = require('http'),
     argosy = require('argosy')(),
     uuid   = require('uuid').v4,
     once   = require('once'),
-    co     = require('co'),
     match  = argosy.pattern.match
 
 var db = level('./data/db', { valueEncoding: 'json' })
@@ -60,29 +59,38 @@ var getWeather = argosy.invoke.partial({ get: 'weather' })
 var putWeather = argosy.invoke.partial({ put: 'weather' })
 var getWeatherHistory = argosy.invoke.partial({ get: 'weather-history' })
 
-co(function *sampleWeather () {
+;(function sampleWeather () {
     let location = 'York, PA'
 
-    try {
-        let weather = yield getWeather({ location })
+    getWeather({ location: location }, function (err, weather) {
+        if (err) return console.error(err)
         weather.time = Date.now()
 
-        yield putWeather({ weather })
+        putWeather({ weather: weather }, function (err) {
+            if (err) return console.error(err)
 
-        console.log(`Saved weather sample for ${location}:`)
-        console.log(JSON.stringify(weather, null, 2))
+            console.log('Saved weather sample for '+location+':')
+            console.log(JSON.stringify(weather, null, 2))
 
-        let history = yield getWeatherHistory()
-        history.sort((a, b) => b.time - a.time)
+            getWeatherHistory(function (err, history) {
+                if (err) return console.error(err)
 
-        console.log('\nHistory:\n' + history.map(e =>
-            `Time: ${new Date(e.time)} / Temp: ${e.temp}`
-        ).join('\n'))
-    }
-    catch (err) {
-        return console.error(err)
-    }
-})
+                history.sort(function (a, b) {
+                    return b.time - a.time
+                })
+
+                console.log('\nHistory:\n' +
+                    history.map(function (e) {
+                        return (
+                            'Time: ' + new Date(e.time) +
+                            '/ Temp: ' + e.temp
+                        )
+                    }).join('\n')
+                )
+            })
+        })
+    })
+})()
 
 
 
